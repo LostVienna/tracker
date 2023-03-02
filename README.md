@@ -10,7 +10,7 @@ The usage is as follows
 
 ```js
 //接口上报
-import Tracker from 'zmy-tracker'
+import Tracker from 'zw-tracker-sdk'
 
 const tr = new Tracker({
     requestUrl:"xxxxxx"
