@@ -41,7 +41,6 @@ export default class Tracker {
   private captureEvents<T>(MouseEventList: string[], target: string, data?: T) {
     MouseEventList.forEach((event) => {
       window.addEventListener(event, () => {
-        console.log(`监听到${event}事件`, target, data);
         this.reportTracker({ event, target, data });
       });
     });
@@ -97,7 +96,6 @@ export default class Tracker {
     };
 
     const blob = new Blob([JSON.stringify(pramas)], headers);
-    console.log(pramas, blob);
 
     // 请求接口，跳转路由不会中断请求
     navigator.sendBeacon(this.data.requestUrl, blob);
