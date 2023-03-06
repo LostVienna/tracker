@@ -41,7 +41,11 @@ export default class Tracker {
   private captureEvents<T>(MouseEventList: string[], target: string, data?: T) {
     MouseEventList.forEach((event) => {
       window.addEventListener(event, () => {
-        this.reportTracker({ event, target, data });
+        this.reportTracker({
+          event,
+          target,
+          data,
+        });
       });
     });
   }
@@ -64,15 +68,9 @@ export default class Tracker {
   // 初始化执行上报的数据类型：路由跳转PV、dom事件、js error
   private installInnerTrack() {
     if (this.data.historyTracker) {
-      this.captureEvents(['pushState'], 'history-pv', {
-        url: window.location.href,
-      });
-      this.captureEvents(['replaceState'], 'history-pv', {
-        url: window.location.href,
-      });
-      this.captureEvents(['popstate'], 'history-pv', {
-        url: window.location.href,
-      });
+      this.captureEvents(['pushState'], 'history-pv');
+      this.captureEvents(['replaceState'], 'history-pv');
+      this.captureEvents(['popstate'], 'history-pv');
     }
 
     if (this.data.hashTracker) {
@@ -90,7 +88,12 @@ export default class Tracker {
 
   // 上传数据到后台
   private reportTracker<T>(data: T) {
-    const pramas = { ...this.data, ...data };
+    const pramas = {
+      ...this.data,
+      ...data,
+      time: new Date().getTime(),
+      url: window.location.href,
+    };
     const headers = {
       type: 'application/x-www-form-urlencoded',
     };
